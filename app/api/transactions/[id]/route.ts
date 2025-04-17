@@ -8,8 +8,9 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
   return Response.json(updated);
 }
 
-export async function DELETE(_: Request, { params }: { params: { id: string } }) {
-  await connectDB();
-  await Transaction.findByIdAndDelete(params.id);
-  return Response.json({ message: 'Deleted' });
+export async function DELETE(req: Request, context: { params: { id: string } }) {
+    const { id } = await context.params; 
+    await connectDB();
+    await Transaction.findByIdAndDelete(id);
+    return Response.json({ message: 'Deleted' });
 }
